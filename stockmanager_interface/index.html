@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <header class="lateral-menu">
+        <nav class="default-nav">
+            <h2 class="text-center align-content-center">Stock Manager</h2>
+            <ul class="list-unstyled">
+                <li view-id="dashboard" class="rounded access-menu active"> <i class="bi bi-bar-chart-line-fill"></i>
+                    <span>Dashboard</span>
+                </li>
+                <li view-id="clients" class="rounded access-menu lateral-btn"> <i class="bi bi-people-fill"></i>
+                    <span>Clientes</span>
+                </li>
+                <li view-id="sales" class="rounded access-menu lateral-btn"> <i
+                        class="bi bi-cart-fill"></i><span>Vendas</span>
+                </li>
+                <li view-id="stock" class="rounded access-menu lateral-btn"><svg xmlns="http://www.w3.org/2000/svg"
+                        width="16" height="16" fill="currentColor" class="bi bi-box-seam-fill svg" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M15.528 2.973a.75.75 0 0 1 .472.696v8.662a.75.75 0 0 1-.472.696l-7.25 2.9a.75.75 0 0 1-.557 0l-7.25-2.9A.75.75 0 0 1 0 12.331V3.669a.75.75 0 0 1 .471-.696L7.443.184l.01-.003.268-.108a.75.75 0 0 1 .558 0l.269.108.01.003zM10.404 2 4.25 4.461 1.846 3.5 1 3.839v.4l6.5 2.6v7.922l.5.2.5-.2V6.84l6.5-2.6v-.4l-.846-.339L8 5.961 5.596 5l6.154-2.461z" />
+                    </svg> <span>Estoque</span></li>
+            </ul>
+        </nav>
+
+        <nav class="navbar">
+            <h2 class="text-center align-content-center">Stock Manager</h2>
+            <div class="dropdown">
+                <button id="switch-btn" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Dashboard
+                </button>
+                <ul class="dropdown-menu">
+                    <li view-id="dashboard" class="rounded access-menu active"> <i
+                            class="bi bi-bar-chart-line-fill"></i>
+                        <span>Dashboard</span>
+                    </li>
+                    <li view-id="clients" class="rounded access-menu lateral-btn"> <i class="bi bi-people-fill"></i>
+                        <span>Clientes</span>
+                    </li>
+                    <li view-id="sales" class="rounded access-menu lateral-btn"> <i
+                            class="bi bi-cart-fill"></i><span>Vendas</span>
+                    </li>
+                    <li view-id="stock" class="rounded access-menu lateral-btn"><svg xmlns="http://www.w3.org/2000/svg"
+                            width="16" height="16" fill="currentColor" class="bi bi-box-seam-fill svg"
+                            viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M15.528 2.973a.75.75 0 0 1 .472.696v8.662a.75.75 0 0 1-.472.696l-7.25 2.9a.75.75 0 0 1-.557 0l-7.25-2.9A.75.75 0 0 1 0 12.331V3.669a.75.75 0 0 1 .471-.696L7.443.184l.01-.003.268-.108a.75.75 0 0 1 .558 0l.269.108.01.003zM10.404 2 4.25 4.461 1.846 3.5 1 3.839v.4l6.5 2.6v7.922l.5.2.5-.2V6.84l6.5-2.6v-.4l-.846-.339L8 5.961 5.596 5l6.154-2.461z" />
+                        </svg> <span>Estoque</span></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div id="dashboard" class="views">
+            <h1>Visão Geral</h1>
+            <div class="card-section mb-2">
+                <div id="total-revenue" class="card shadow-sm">
+                    <div class="card-body ">
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Receita total</h6>
+                        <h2 class="card-title">R$ 1.000,00</h2>
+                    </div>
+                </div>
+                <div id="total-clients" class="card shadow-sm">
+                    <div class="card-body ">
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Clientes total</h6>
+                        <h2 class="card-title">10</h2>
+                    </div>
+                </div>
+                <div id="total-stock" class="card shadow-sm">
+                    <div class="card-body ">
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Estoque total</h6>
+                        <h2 class="card-title">16</h2>
+                    </div>
+                </div>
+                <div id="critic-items" class="card shadow-sm">
+                    <div class="card-body ">
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Itens críticos</h6>
+                        <h2 class="card-title">7</h2>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="separator mb-4">
+                <div class="card p-4 h-100 shadow-sm double-space">
+                    <h5 class="fw-bold mb-4">Performance Comercial deste semestre</h5>
+                    <div id="grafic">
+                        <canvas style="max-height:10.625rem;" id="graficChart" height="120" width="575"></canvas>
+                    </div>
+                </div>
+                <div id="critic-items-description" class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-subtitle mb-2"> <i class="bi-exclamation-triangle-fill"></i> <span
+                                style="margin-left: 1.7rem;">Estoque
+                                crítico</span></h5>
+                        <div id="critic-list">
+                            <ul class="list-unstyled">
+                                <li class="shadow-sm" style="justify-content: space-between;">Fonte Corsair RM850x 850W
+                                    Gold <span class="badge bg-danger-subtle text-danger rounded-pill text-lowercase">2
+                                        un</span>
+                                </li>
+                                <li class="shadow-sm" style="justify-content: space-between;">Fonte Corsair RM850x 850W
+                                    Gold <span class="badge bg-danger-subtle text-danger rounded-pill text-lowercase">2
+                                        un</span>
+                                </li>
+                                <li class="shadow-sm" style="justify-content: space-between;">Fonte Corsair RM850x 850W
+                                    Gold <span class="badge bg-danger-subtle text-danger rounded-pill text-lowercase">2
+                                        un</span>
+                                </li>
+                                <li class="shadow-sm" style="justify-content: space-between;">Fonte Corsair RM850x 850W
+                                    Gold <span class="badge bg-danger-subtle text-danger rounded-pill text-lowercase">2
+                                        un</span>
+                                </li>
+                                <li class="shadow-sm" style="justify-content: space-between;">Fonte Corsair RM850x 850W
+                                    Gold <span class="badge bg-danger-subtle text-danger rounded-pill text-lowercase">2
+                                        un</span>
+                                </li>
+                                <li class="shadow-sm" style="justify-content: space-between;">Fonte Corsair RM850x 850W
+                                    Gold <span class="badge bg-danger-subtle text-danger rounded-pill text-lowercase">2
+                                        un</span>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="shadow-sm table-clients-dashbord">
+                <h2>Movimentações recentes</h2>
+                <div class="clients-dashbord-view overflow-y-auto">
+                    <table id="client-table" class="table table-striped table-hover">
+                        <thead class="sticky-top" style="z-index: 1;">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Status</th>
+                                <th>Investimento</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-dashbord">
+                            <tr>
+                                <td class="info">#1</td>
+                                <td class="info">Carlos Eduardo</td>
+                                <td><span class="badge text-bg-success">Ativo</span></td>
+                                <td class="info">R$4.500,00</td>
+                                <td><button type="button" class="btn btn-secondary">Chamar cliente</button></td>
+                            </tr>
+                            <tr>
+                                <td class="info">#1</td>
+                                <td class="info">Carlos Eduardo</td>
+                                <td><span class="badge text-bg-warning">Inativo</span></td>
+                                <td class="info">R$4.500,00</td>
+                                <td><button type="button" class="btn btn-secondary">Chamar cliente</button></td>
+                            </tr>
+                            <tr>
+                                <td class="info">#1</td>
+                                <td class="info">Carlos Eduardo</td>
+                                <td><span class="badge text-bg-success">Ativo</span></td>
+                                <td class="info">R$4.500,00</td>
+                                <td><button type="button" class="btn btn-secondary">Chamar cliente</button></td>
+                            </tr>
+                            <tr>
+                                <td class="info">#1</td>
+                                <td class="info">Carlos Eduardo</td>
+                                <td><span class="badge text-bg-success">Ativo</span></td>
+                                <td class="info">R$4.500,00</td>
+                                <td><button type="button" class="btn btn-secondary">Chamar cliente</button></td>
+                            </tr>
+                            <tr>
+                                <td class="info">#1</td>
+                                <td class="info">Carlos Eduardo</td>
+                                <td><span class="badge text-bg-success">Ativo</span></td>
+                                <td class="info">R$4.500,00</td>
+                                <td><button type="button" class="btn btn-secondary">Chamar cliente</button></td>
+                            </tr>
+                            <tr>
+                                <td class="info">#1</td>
+                                <td class="info">Carlos Eduardo</td>
+                                <td><span class="badge text-bg-success">Ativo</span></td>
+                                <td class="info">R$4.500,00</td>
+                                <td><button type="button" class="btn btn-secondary">Chamar cliente</button></td>
+                            </tr>
+                            <tr>
+                                <td class="info">#1</td>
+                                <td class="info">Carlos Eduardo</td>
+                                <td><span class="badge text-bg-success">Ativo</span></td>
+                                <td class="info">R$4.500,00</td>
+                                <td><button type="button" class="btn btn-secondary">Chamar cliente</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="clients" class="views d-none p-4 shadow-sm">
+            <div class="central">
+
+                <h2>Central de Clientes</h2>
+
+                <div class="input-group flex-nowrap search">
+                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+
+                    <input type="text" class="form-control" id="filter-client"
+                        placeholder="Filtrar por nome ou e-mail..." aria-label="Filtrar por nome ou e-mail..."
+                        aria-describedby="addon-wrapping">
+                </div>
+
+                <button class="btn btn-primary h3 position-relative" data-bs-toggle="modal"
+                    data-bs-target="#modalNewCliente" id="nc-icon"><i class="bi bi-person-plus-fill"></i> <nc>Novo Cliente</nc></button>
+
+                <div class="modal fade new" id="modalNewCliente" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 shadow">
+                            <div class="modal-header border-0 pb-0">
+                                <h5 class="fw-bold">Novo Cliente</h5>
+                                <button id="" type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <form id="form-newCliente" class="modal-body">
+                                <div class="label small fw-bold text-muted mb-1">Nome completo</div>
+                                <input type="text" class="form-control mb-2" id="newName" placeholder="Nome completo"
+                                    required>
+                                <div class="label small fw-bold text-muted mb-1">Email</div>
+                                <input type="email" class="form-control mb-2" id="newEmail"
+                                    placeholder="E-mail profissional" required>
+                                <div class="label small fw-bold text-muted mb-1">Telefone</div>
+                                <div class="input-group mb-2 cell-phone ddi">
+                                    <input type="number" class="form-control tel-pref" id="newDDI" value="55"
+                                        style="max-width: 65px; padding-left: 18px;" maxlength="3" placeholder="000">
+
+                                    <input type="text" class="form-control" id="newPhone" placeholder="(00) 00000-0000"
+                                        maxlength="15" required>
+                                </div>
+                                <div class="label small fw-bold text-muted mb-1">Investimento (R$)</div>
+                                <input type="text" class="form-control mb-3 BRL" id="newInvestiment"
+                                    placeholder="Investimento inicial (Opcional)">
+                                <button class="btn btn-primary w-100">Salvar Cadastro</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade new" id="modalUpdateClient" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 shadow">
+                            <div class="modal-header border-0 pb-0">
+                                <h5 class="fw-bold">Editar dados do Cliente</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <form id="form-updateClient" class="modal-body">
+                                <div class="label small fw-bold text-muted mb-1">Nome completo</div>
+                                <input type="text" class="form-control mb-2" id="updateName" placeholder="Nome completo"
+                                    required>
+                                <div class="label small fw-bold text-muted mb-1">Email</div>
+                                <input type="email" class="form-control mb-2" id="updateEmail"
+                                    placeholder="E-mail profissional" required>
+                                <div class="label small fw-bold text-muted mb-1">Status</div>
+                                <select id="updateStatus" class="form-select mb-2" aria-label="Selecione o status">
+                                    <option value="ACTIVE">Ativo</option>
+                                    <option value="INACTIVE">Inativo</option>
+                                </select>
+                                <div class="label small fw-bold text-muted mb-1">Telefone</div>
+                                <div class="input-group mb-2 cell-phone ddi">
+                                    <input type="number" class="form-control tel-pref" id="updateDDI" value="55"
+                                        style="max-width: 65px; padding-left: 18px;" maxlength="3" placeholder="000">
+
+                                    <input type="text" class="form-control" id="updatePhone"
+                                        placeholder="(00) 00000-0000" maxlength="15" required>
+                                </div>
+                                <div class="label small fw-bold text-muted mb-1">Investimento (R$)</div>
+                                <input type="text" class="form-control mb-3 BRL" id="updateInvestiment"
+                                    placeholder="Investimento inicial (Opcional)">
+                                <button class="btn btn-primary w-100">Atualizar Cadastro</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overflow-y-auto clients-view">
+                <table class="table table-hover table-clients" id="table-clients-style">
+                    <thead class="table-dark sticky-top" style="z-index: 1;">
+                        <tr>
+                            <th>Nome</th>
+                            <th>Status</th>
+                            <th>Total gasto</th>
+                            <th>Gerenciar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-clients">
+                        <tr class="table-clients-row">
+                            <td>
+                                <div>Carlos Eduardo</div>
+                                <p class="text-muted">carlos@gmail.com</p>
+                            </td>
+                            <td><span class="badge bg-success-subtle text-success">Ativo</span></td>
+                            <td class="text-primary fw-semibold">R$ 4.000,00</td>
+                            <td class="manager-btn"><span class="text-primary edit-btn"><i
+                                        class="bi bi-pencil-fill"></i></span><span class="text-danger delete-btn"><i
+                                        class="bi bi-trash-fill"></i></span></td>
+                        </tr>
+                        <tr class="table-clients-row">
+                            <td>
+                                <div>Carlos Eduardo</div>
+                                <p class="text-muted">carlos@gmail.com</p>
+                            </td>
+                            <td><span class="badge bg-success-subtle text-success">Ativo</span></td>
+                            <td class="text-primary fw-semibold">R$ 4.000,00</td>
+                            <td class="manager-btn"><span class="text-primary edit-btn"><i
+                                        class="bi bi-pencil-fill"></i></span><span class="text-danger delete-btn"><i
+                                        class="bi bi-trash-fill"></i></span></td>
+                        </tr>
+                        <tr class="table-clients-row">
+                            <td>
+                                <div>Carlos Eduardo</div>
+                                <p class="text-muted">carlos@gmail.com</p>
+                            </td>
+                            <td><span class="badge bg-success-subtle text-success">Ativo</span></td>
+                            <td class="text-primary fw-semibold">R$ 4.000,00</td>
+                            <td class="manager-btn"><span class="text-primary edit-btn"><i
+                                        class="bi bi-pencil-fill"></i></span><span class="text-danger delete-btn"><i
+                                        class="bi bi-trash-fill"></i></span></td>
+                        </tr>
+                        <tr class="table-clients-row">
+                            <td>
+                                <div>Carlos Eduardo</div>
+                                <p class="text-muted">carlos@gmail.com</p>
+                            </td>
+                            <td><span class="badge bg-warning-subtle text-warning">Inativo</span></td>
+                            <td class="text-primary fw-semibold">R$ 4.000,00</td>
+                            <td class="manager-btn"><span class="text-primary edit-btn"><i
+                                        class="bi bi-pencil-fill"></i></span><span class="text-danger delete-btn"><i
+                                        class="bi bi-trash-fill"></i></span></td>
+                        </tr>
+                        <tr class="table-clients-row">
+                            <td>
+                                <div>Carlos Eduardo</div>
+                                <p class="text-muted">carlos@gmail.com</p>
+                            </td>
+                            <td><span class="badge bg-success-subtle text-success">Ativo</span></td>
+                            <td class="text-primary fw-semibold">R$ 4.000,00</td>
+                            <td class="manager-btn"><span class="text-primary edit-btn"><i
+                                        class="bi bi-pencil-fill"></i></span><span class="text-danger delete-btn"><i
+                                        class="bi bi-trash-fill"></i></span></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="sales" class="views d-none">
+
+            <div class="flexible-double-flex">
+                <div class="one">
+                    <div class="large-card shadow-sm">
+                        <form action="" id="multiForm">
+                            <h2>Lançar venda</h2>
+
+                            <p class="fw-medium mb-1">Cliente</p>
+                            <select id="clients-options" class="form-select mb-4" aria-label="Default select example"
+                                required>
+                                <option selected value="">Selecione um cliente</option>
+                                <option value="1">João</option>
+                                <option value="2">Carlos</option>
+                                <option value="3">Maria</option>
+                            </select>
+
+                            <p class="fw-medium mb-1">Produto</p>
+                            <select id="products-options" class="form-select mb-4" aria-label="Default select example"
+                                required>
+                                <option selected value="">Selecione um produto</option>
+                                <option value="1">Processador</option>
+                                <option value="2">Computador</option>
+                                <option value="3">Mouse</option>
+                            </select>
+
+                            <div class="inputs-display-flex mb-4">
+                                <div>
+                                    <p class="fw-medium mb-1">Quantidade</p>
+                                    <input id="qttLc" class="form-control" type="number" required>
+                                </div>
+                                <div class="">
+                                    <p class="fw-medium mb-1">Valor Total</p>
+                                    <div class="input-group flex-nowrap">
+                                        <span class="input-group-text" id="addon-wrapping">R$</span>
+                                        <input id="pcLc" type="text" class="form-control BRL" placeholder="0,00"
+                                            aria-label="0,00" aria-describedby="addon-wrapping" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-primary fw-semibold w-100 addCart" type="submit">Adicionar
+                                    ao
+                                    carrinho</button>
+                                <button class="btn btn-success fw-semibold w-100 addSale" type="submit">Concluir
+                                    Transação</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="large-card shadow-sm">
+                        <h2>Carrinho <i class="bi bi-cart-fill"></i></h2>
+                        <div class="overflow-y-auto cart" id="cartView">
+                            <div class="card shadow-sm mb-4">
+                                <h5 class="card-header">Cliente: João</h5>
+                                <div class="card-body">
+                                    <div class="table-body-cart overflow-y-auto">
+                                        <table class="table">
+                                            <thead>
+                                                <th>Produto</th>
+                                                <th>Quantidade</th>
+                                                <th>Valor total</th>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr>
+                                                    <td><span id="cTag" class="badge text-truncate"
+                                                            style="background-color: rgb(41, 100, 179);">232323</span>
+                                                    </td>
+                                                    <td><button class="btn btn-outline-secondary">-</button> <input
+                                                            class="d-inline-block form-control qtt-cart" type="text"
+                                                            value="30" maxlength="2"> <button
+                                                            class="btn btn-outline-secondary">+</button></td>
+                                                    <td>R$ <input class="d-inline-block form-control BRL" type="text"
+                                                            value="40.000,00"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td><span id="cTag" class="badge text-truncate"
+                                                            style="background-color: rgb(41, 100, 179);">232323</span>
+                                                    </td>
+                                                    <td><button class="btn btn-outline-secondary">-</button> <input
+                                                            class="d-inline-block form-control qtt-cart" type="text"
+                                                            value="30" maxlength="2"> <button
+                                                            class="btn btn-outline-secondary">+</button></td>
+                                                    <td>R$ <input class="d-inline-block form-control BRL" type="text"
+                                                            value="5.000,00"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span id="cTag" class="badge text-truncate"
+                                                            style="background-color: rgb(41, 100, 179);">232323</span>
+                                                    </td>
+                                                    <td><button class="btn btn-outline-secondary">-</button> <input
+                                                            class="d-inline-block form-control qtt-cart" type="text"
+                                                            value="30" maxlength="2"> <button
+                                                            class="btn btn-outline-secondary">+</button></td>
+                                                    <td>R$ <input class="d-inline-block form-control BRL" type="text"
+                                                            value="5.000,00"></td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Total:</span>
+                                        <div class="d-inline-block">
+                                            R$ <input class="d-inline-block form-control BRL total" type="text"
+                                                value="140.000,00"></div>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-danger w-100">Excluir
+                                            carrinho</button>
+                                        <button class="btn btn-success w-100">Concluir
+                                            venda</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card shadow-sm mb-4">
+                                <h5 class="card-header">Cliente: João</h5>
+                                <div class="card-body">
+                                    <div class="table-body-cart overflow-y-auto">
+                                        <table class="table">
+                                            <thead>
+                                                <th>Produto</th>
+                                                <th>Quantidade</th>
+                                                <th>Valor total</th>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr>
+                                                    <td><span id="cTag" class="badge text-truncate"
+                                                            style="background-color: rgb(41, 100, 179);">232323</span>
+                                                    </td>
+                                                    <td><button class="btn btn-outline-secondary">-</button> <input
+                                                            class="d-inline-block form-control qtt-cart" type="text"
+                                                            value="30" maxlength="2"> <button
+                                                            class="btn btn-outline-secondary">+</button></td>
+                                                    <td>R$ <input class="d-inline-block form-control BRL" type="text"
+                                                            value="40.000,00"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td><span id="cTag" class="badge text-truncate"
+                                                            style="background-color: rgb(41, 100, 179);">232323</span>
+                                                    </td>
+                                                    <td><button class="btn btn-outline-secondary">-</button> <input
+                                                            class="d-inline-block form-control qtt-cart" type="text"
+                                                            value="30" maxlength="2"> <button
+                                                            class="btn btn-outline-secondary"> +</button></td>
+                                                    <td>R$ <input class="d-inline-block form-control BRL" type="text"
+                                                            value="5.000,00"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span id="cTag" class="badge text-truncate"
+                                                            style="background-color: rgb(41, 100, 179);">232323</span>
+                                                    </td>
+                                                    <td><button class="btn btn-outline-secondary">-</button> <input
+                                                            class="d-inline-block form-control qtt-cart" type="text"
+                                                            value="30" maxlength="2"> <button
+                                                            class="btn btn-outline-secondary"> + </button></td>
+                                                    <td>R$ <input class="d-inline-block form-control BRL" type="text"
+                                                            value="5.000,00"></td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Total:</span>
+                                        <div class="d-inline-block">
+                                            R$ <input class="d-inline-block form-control BRL total" type="text"
+                                                value="140.000,00"></div>
+                                    </div>
+                                    <div class="d-flex gap-2 mb-1">
+                                        <button class="btn btn-danger w-100">Excluir
+                                            carrinho</button>
+                                        <button class="btn btn-success w-100">Concluir
+                                            venda</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="two large-card shadow-sm">
+                    <div class="sales-info">
+                        <h2>Histórico de vendas</h2>
+                        <div>
+                            <span id="medium-ticket" class="badge text-bg-primary">Ticket Médio: R$ 0,00</span>
+                        </div>
+                    </div>
+                    <div id="sales-historic">
+                        <table class="table table-striped table-hover text-center">
+                            <thead class="table-secondary sticky-top" style="z-index: 1;">
+                                <th>Data</th>
+                                <th>Cliente</th>
+                                <th>Valor</th>
+                                <th>Gerenciar</th>
+                            </thead>
+                            <tbody id="table-sales">
+                                <tr>
+                                    <td>10/10/1500</td>
+                                    <td>José dos campos</td>
+                                    <td class="text-success fw-semibold">R$ 1.500,00</td>
+                                    <td class="manager-btn"><span class="text-primary edit-btn"><i
+                                                class="bi bi-pencil-fill"></i></span><span
+                                            class="text-danger delete-btn"><i class="bi bi-trash-fill"></i></span></td>
+                                </tr>
+                                <tr>
+                                    <td>10/10/1500</td>
+                                    <td>José dos campos</td>
+                                    <td class="text-success fw-semibold">R$ 1.500,00</td>
+                                    <td class="manager-btn"><span class="text-primary edit-btn"><i
+                                                class="bi bi-pencil-fill"></i></span><span
+                                            class="text-danger delete-btn"><i class="bi bi-trash-fill"></i></span></td>
+                                </tr>
+                                <tr>
+                                    <td>10/10/1500</td>
+                                    <td>José dos campos</td>
+                                    <td class="text-success fw-semibold">R$ 1.500,00</td>
+                                    <td class="manager-btn"><span class="text-primary edit-btn"><i
+                                                class="bi bi-pencil-fill"></i></span><span
+                                            class="text-danger delete-btn"><i class="bi bi-trash-fill"></i></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="modal fade new" id="modalUpdateSale" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content border-0 shadow">
+                                <div class="modal-header border-0 pb-0">
+                                    <h5 class="fw-bold">Editar dados da venda</h5>
+                                    <button id="closeSaleModal" type="button" class="btn-close"
+                                        data-bs-dismiss="modal"></button>
+                                </div>
+                                <p class="fw-bold h6 mb-0" style="margin-left: 1rem;" id="nameClientSaleUpdate"></p>
+                                <form id="form-update-sale" class="modal-body">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="stock" class="views d-none">
+
+            <div class="flexible-double-flex">
+                <div id="newProduct" class="one large-card shadow-sm d-block">
+                    <h2>Novo Produto</h2>
+
+                    <form id="form-newProduct">
+                        <div class="mb-4">
+                            <p class="fw-medium mb-1">Nome do Produto</p>
+                            <input id="newProductName" class="form-control" type="text"
+                                placeholder="Digite o nome do produto" required>
+                        </div>
+
+                        <div class="inputs-display-flex mb-4">
+                            <div style="flex: 1 1;">
+                                <p class="fw-medium mb-1">Quantidade</p>
+                                <input id="newStock" class="form-control" type="number" required>
+                            </div>
+
+                            <div style="flex: 1 1;">
+                                <p class="fw-medium mb-1">Preço</p>
+                                <div class="input-group flex-nowrap">
+                                    <span class="input-group-text" id="addon-wrapping">R$</span>
+                                    <input id="newPrice" type="text" class="form-control BRL" placeholder="0,00"
+                                        aria-label="0,00" aria-describedby="addon-wrapping" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="inputs-display-flex mb-4">
+
+                            <div style="flex: 1 1;">
+                                <p class="fw-medium mb-1">Estoque mínimo</p>
+                                <input id="newMinStock" class="form-control" type="number" value="#2964b3" required>
+                            </div>
+
+                            <div style="flex: 1 1;">
+                                <p class="fw-medium mb-1">Cor da tag</p>
+
+                                <div class="color-input">
+                                    <input id="newColor" class="form-control form-control-color" type="color"
+                                        value="#2964b3">
+                                    <div>
+                                        <span id="nTag" class="badge text-truncate"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary fw-semibold" type="submit">Atualizar Estoque</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal fade new" id="modalUpdateProduct" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 shadow">
+                            <div class="modal-header border-0 pb-0">
+                                <h5 class="fw-bold">Editar produto</h5>
+                                <button id="" type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <form id="form-updateProduct" class="modal-body">
+                                <div class="mb-4">
+                                    <p class="fw-medium mb-1">Nome do Produto</p>
+                                    <input id="updateProductName" class="form-control" type="text"
+                                        placeholder="Digite o nome do produto" required>
+                                </div>
+
+                                <div class="inputs-display-flex mb-4">
+                                    <div>
+                                        <p class="fw-medium mb-1">Quantidade</p>
+                                        <input id="updateStock" class="form-control" type="number" required>
+                                    </div>
+
+                                    <div>
+                                        <p class="fw-medium mb-1">Preço</p>
+                                        <div class="input-group flex-nowrap">
+                                            <span class="input-group-text" id="addon-wrapping">R$</span>
+                                            <input id="updatePrice" type="text" class="form-control BRL"
+                                                placeholder="0,00" aria-label="0,00" aria-describedby="addon-wrapping"
+                                                required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="inputs-display-flex mb-4">
+
+                                    <div style="flex: 1 1;">
+                                        <p class="fw-medium mb-1">Estoque mínimo</p>
+                                        <input id="updateMinStock" class="form-control" type="number" value="#2964b3"
+                                            required>
+                                    </div>
+
+                                    <div style="flex: 1 1;">
+                                        <p class="fw-medium mb-1">Cor da tag</p>
+
+                                        <div class="color-input">
+                                            <input id="updateColor" class="form-control form-control-color" type="color"
+                                                value="#2964b3">
+                                            <div>
+                                                <span id="uTag" class="badge text-truncate"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Atualizar Produto</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="two large-card shadow-sm">
+                    <h2>Inventário</h2>
+                    <div id="inventary">
+                        <table class="table table-striped table-hover text-center">
+                            <thead class="table-dark sticky-top" style="z-index: 1;">
+                                <th>Produto</th>
+                                <th>Quantidade</th>
+                                <th>Estoque Mínimo</th>
+                                <th>Status</th>
+                                <th>Valor</th>
+                                <th>Gerenciar</th>
+                            </thead>
+
+                            <tbody id="table-stock">
+                                <tr>
+                                    <td>Processador</td>
+                                    <td>10</td>
+                                    <td>5</td>
+                                    <td><span class="badge bg-success-subtle text-success">Normal</span></td>
+                                    <td>R$ 900,00</td>
+                                    <td class="manager-btn"><span class="text-primary edit-btn"><i
+                                                class="bi bi-pencil-fill"></i></span><span
+                                            class="text-danger delete-btn"><i class="bi bi-trash-fill"></i></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Mouse</td>
+                                    <td>20</td>
+                                    <td>25</td>
+                                    <td><span class="badge bg-danger-subtle text-danger">crítico</span></td>
+                                    <td>R$ 50,00</td>
+                                    <td class="manager-btn"><span class="text-primary edit-btn"><i
+                                                class="bi bi-pencil-fill"></i></span><span
+                                            class="text-danger delete-btn"><i class="bi bi-trash-fill"></i></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <script src="script.js" type="module"></script>
+
+</body>
+
+</html>
